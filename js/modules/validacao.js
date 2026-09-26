@@ -1,4 +1,3 @@
-// js/modules/validacao.js
 
 import {
     salvarPreferencias,
@@ -6,16 +5,65 @@ import {
 } from "./storage.js";
 
 export function iniciarValidacao() {
-    const formulario = document.getElementById("formulario-cadastro");
+    const formulario = document.getElementById(
+        "formulario-cadastro"
+    );
 
-    // A função só é ativada quando o formulário está na tela.
+    // Só executa quando o formulário está na tela.
     if (!formulario) {
         return;
     }
 
+    // Permite que o JavaScript apresente os erros personalizados.
+    formulario.noValidate = true;
+
     const mensagemGeral = document.getElementById(
         "mensagem-formulario"
     );
+
+    // ==================================================
+    // 1. RECUPERAÇÃO E ARMAZENAMENTO DAS PREFERÊNCIAS
+    // ==================================================
+
+    const campoTipo = document.getElementById("tipo");
+    const campoProjeto = document.getElementById("projeto");
+
+    if (campoTipo && campoProjeto) {
+        const preferencias = recuperarPreferencias();
+
+        // Restaura as escolhas salvas anteriormente.
+        if (preferencias) {
+            if (preferencias.tipo) {
+                campoTipo.value = preferencias.tipo;
+            }
+
+            if (preferencias.projeto) {
+                campoProjeto.value = preferencias.projeto;
+            }
+        }
+
+        // Salva apenas o tipo de participação e o projeto.
+        function atualizarPreferencias() {
+            salvarPreferencias({
+                tipo: campoTipo.value,
+                projeto: campoProjeto.value
+            });
+        }
+
+        campoTipo.addEventListener(
+            "change",
+            atualizarPreferencias
+        );
+
+        campoProjeto.addEventListener(
+            "change",
+            atualizarPreferencias
+        );
+    }
+
+    // ==================================================
+    // 2. MENSAGENS DE ERRO
+    // ==================================================
 
     function limparErro(campo) {
         campo.removeAttribute("aria-invalid");
@@ -47,7 +95,10 @@ export function iniciarValidacao() {
             mensagem.id
         );
 
-        campo.insertAdjacentElement("afterend", mensagem);
+        campo.insertAdjacentElement(
+            "afterend",
+            mensagem
+        );
     }
 
     function obterMensagem(campo) {
@@ -64,7 +115,8 @@ export function iniciarValidacao() {
         }
 
         if (campo.validity.patternMismatch) {
-            return campo.title || "Confira o formato informado.";
+            return campo.title ||
+                "Confira o formato informado.";
         }
 
         return "Confira as informações deste campo.";
@@ -74,12 +126,20 @@ export function iniciarValidacao() {
         limparErro(campo);
 
         if (!campo.validity.valid) {
-            mostrarErro(campo, obterMensagem(campo));
+            mostrarErro(
+                campo,
+                obterMensagem(campo)
+            );
+
             return false;
         }
 
         return true;
     }
+
+    // ==================================================
+    // 3. EVENTOS DOS CAMPOS
+    // ==================================================
 
     const campos = formulario.querySelectorAll(
         "input, select, textarea"
@@ -96,6 +156,10 @@ export function iniciarValidacao() {
             }
         });
     });
+
+    // ==================================================
+    // 4. ENVIO DO FORMULÁRIO
+    // ==================================================
 
     formulario.addEventListener("submit", (evento) => {
         evento.preventDefault();
@@ -114,7 +178,8 @@ export function iniciarValidacao() {
             mensagemGeral.textContent =
                 "Existem campos que precisam ser corrigidos.";
 
-            mensagemGeral.className = "alerta alerta-erro";
+            mensagemGeral.className =
+                "alerta alerta-erro";
 
             primeiroCampoInvalido.focus();
 
@@ -126,8 +191,13 @@ export function iniciarValidacao() {
             "Este é um projeto demonstrativo. " +
             "Nenhum dado foi enviado.";
 
-        mensagemGeral.className = "alerta alerta-sucesso";
+        mensagemGeral.className =
+            "alerta alerta-sucesso";
     });
+
+    // ==================================================
+    // 5. LIMPEZA DO FORMULÁRIO
+    // ==================================================
 
     formulario.addEventListener("reset", () => {
         campos.forEach(limparErro);
