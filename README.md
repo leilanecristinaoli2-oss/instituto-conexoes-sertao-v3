@@ -43,4 +43,4 @@ A conformidade será avaliada e documentada após a realização dos testes.
 
 A aplicação está disponível no GitHub Pages.
 
-[Acessar o site](https://leilanecristinaoli2-oss.github.io/instituto-conexoes-sertao-v3/#/inicio)
+[Acessar o site](https://leilanecristinaoli2-oss.github.io/instituto-conexoes-sertao-v3/#/inicio) 
