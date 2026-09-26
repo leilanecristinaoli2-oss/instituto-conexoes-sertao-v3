@@ -153,14 +153,257 @@ export function templateProjetos() {
     `;
 }
 
+
 export function templateCadastro() {
     return `
         <section class="secao">
             <div class="container formulario-container">
-                <h2>Faça parte dessa transformação</h2>
-                <p>
-                    O formulário será integrado na próxima etapa.
-                </p>
+
+                <div class="formulario-introducao">
+                    <h2>Faça parte dessa transformação</h2>
+
+                    <p>
+                        Cadastre-se para participar das iniciativas
+                        como voluntário ou apoiador.
+                    </p>
+
+                    <div class="alerta alerta-info" role="status">
+                        <strong>Atenção:</strong>
+                        os campos obrigatórios devem ser
+                        preenchidos corretamente.
+                    </div>
+                </div>
+
+                <form class="formulario" id="formulario-cadastro">
+
+                    <fieldset>
+                        <legend>Dados Pessoais</legend>
+
+                        <div class="form-grid">
+
+                            <div class="campo campo-completo">
+                                <label for="nome">Nome completo:</label>
+                                <input
+                                    type="text"
+                                    id="nome"
+                                    name="nome"
+                                    autocomplete="name"
+                                    placeholder="Digite seu nome completo"
+                                    required
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="cpf">CPF:</label>
+                                <input
+                                    type="text"
+                                    id="cpf"
+                                    name="cpf"
+                                    inputmode="numeric"
+                                    pattern="[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}"
+                                    placeholder="000.000.000-00"
+                                    title="Use o formato 000.000.000-00"
+                                    required
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="nascimento">
+                                    Data de nascimento:
+                                </label>
+                                <input
+                                    type="date"
+                                    id="nascimento"
+                                    name="nascimento"
+                                    required
+                                >
+                            </div>
+
+                            <div class="campo campo-completo">
+                                <label for="email">E-mail:</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    autocomplete="email"
+                                    placeholder="nome@exemplo.com"
+                                    required
+                                >
+                            </div>
+
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Contato e endereço</legend>
+
+                        <div class="form-grid">
+
+                            <div class="campo">
+                                <label for="telefone">Telefone:</label>
+                                <input
+                                    type="tel"
+                                    id="telefone"
+                                    name="telefone"
+                                    autocomplete="tel"
+                                    pattern="\\([0-9]{2}\\) [0-9]{5}-[0-9]{4}"
+                                    placeholder="(83) 99999-9999"
+                                    title="Use o formato (83) 99999-9999"
+                                    required
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="cep">CEP:</label>
+                                <input
+                                    type="text"
+                                    id="cep"
+                                    name="cep"
+                                    autocomplete="postal-code"
+                                    inputmode="numeric"
+                                    pattern="[0-9]{5}-[0-9]{3}"
+                                    placeholder="00000-000"
+                                    title="Use o formato 00000-000"
+                                    required
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="cidade">Cidade:</label>
+                                <input
+                                    type="text"
+                                    id="cidade"
+                                    name="cidade"
+                                    autocomplete="address-level2"
+                                    placeholder="Sua cidade"
+                                    required
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="estado">Estado:</label>
+                                <input
+                                    type="text"
+                                    id="estado"
+                                    name="estado"
+                                    autocomplete="address-level1"
+                                    placeholder="Seu estado"
+                                    required
+                                >
+                            </div>
+
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Participação</legend>
+
+                        <div class="form-grid">
+
+                            <div class="campo">
+                                <label for="tipo-participacao">
+                                    Como deseja participar?
+                                </label>
+
+                                <select
+                                    id="tipo-participacao"
+                                    name="tipo-participacao"
+                                    required
+                                >
+                                    <option value="">
+                                        Selecione uma opção
+                                    </option>
+                                    <option value="voluntario">
+                                        Voluntário
+                                    </option>
+                                    <option value="apoiador">
+                                        Apoiador
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="campo">
+                                <label for="projeto">
+                                    Projeto de interesse:
+                                </label>
+
+                                <select
+                                    id="projeto"
+                                    name="projeto"
+                                    required
+                                >
+                                    <option value="">
+                                        Selecione um projeto
+                                    </option>
+                                    <option value="coleta">
+                                        Coleta Seletiva e Apoio aos Catadores
+                                    </option>
+                                    <option value="cultura">
+                                        Cultura e Memória de Cajazeiras
+                                    </option>
+                                    <option value="conexoes">
+                                        Conexões Comunitárias
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="campo campo-completo">
+                                <label for="mensagem">
+                                    Conte-nos como gostaria de contribuir:
+                                </label>
+
+                                <textarea
+                                    id="mensagem"
+                                    name="mensagem"
+                                    rows="5"
+                                    maxlength="500"
+                                    placeholder="Escreva sua mensagem"
+                                ></textarea>
+                            </div>
+
+                        </div>
+                    </fieldset>
+
+                    <div class="termos">
+                        <input
+                            type="checkbox"
+                            id="termos"
+                            name="termos"
+                            required
+                        >
+
+                        <label for="termos">
+                            Declaro que as informações são verdadeiras
+                            e autorizo o uso dos dados para fins de
+                            contato pelo Instituto.
+                        </label>
+                    </div>
+
+                    <div
+                        id="mensagem-formulario"
+                        role="status"
+                        aria-live="polite"
+                    ></div>
+
+                    <div class="acoes-formulario">
+                        <button class="botao" type="submit">
+                            Enviar cadastro
+                        </button>
+
+                        <button
+                            class="botao botao-neutro"
+                            type="reset"
+                        >
+                            Limpar formulário
+                        </button>
+
+                        <button class="botao" type="button" disabled>
+                            Indisponível
+                        </button>
+                    </div>
+
+                </form>
+
             </div>
         </section>
     `;
