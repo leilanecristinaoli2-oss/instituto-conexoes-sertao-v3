@@ -1,5 +1,10 @@
 // js/modules/validacao.js
 
+import {
+    salvarPreferencias,
+    recuperarPreferencias
+} from "./storage.js";
+
 export function iniciarValidacao() {
     const formulario = document.getElementById("formulario-cadastro");
 
