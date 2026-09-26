@@ -1,0 +1,921 @@
+/* =========================================================
+   INSTITUTO CONEXÕES DO SERTÃO
+   Experiência Prática III - JavaScript / SPA (base CSS da EP II)
+   ========================================================= */
+
+
+/* =========================================================
+   1. DESIGN SYSTEM
+   ========================================================= */
+
+:root {
+    /* Cores */
+    --cor-primaria: #2F6B4F;
+    --cor-primaria-escura: #1F4D38;
+    --cor-secundaria: #93451F; /* Terracota escuro: texto branco AA */
+    --cor-secundaria-clara: #F4C5A7; /* Destaque em fundo verde */
+    --cor-fundo: #F7F5F0;
+    --cor-superficie: #FFFFFF;
+    --cor-texto: #252525;
+    --cor-texto-secundario: #5C5C5C;
+
+    /* Pares de cores padrão para leitura (WCAG AA, texto normal >= 4.5:1):
+       #252525 sobre #FFFFFF ou #F7F5F0: texto principal;
+       #5C5C5C sobre #FFFFFF ou #F7F5F0: texto secundário;
+       #FFFFFF sobre #2F6B4F ou #1F4D38: cabeçalho e botão primário;
+       #FFFFFF sobre #93451F: botão secundário;
+       Evitar branco sobre o antigo terracota #C96F3B em texto pequeno.
+       Não utilizar as cores de status isoladamente para transmitir informação. */
+
+    /* Cores auxiliares */
+    --cor-sucesso: #287A4B;
+    --cor-erro: #B42318;
+    --cor-info: #245B78;
+    --cor-borda: #D8D4CC;
+
+    /* Tipografia */
+    --fonte-xs: 0.875rem;
+    --fonte-sm: 1rem;
+    --fonte-md: 1.25rem;
+    --fonte-lg: 2rem;
+    --fonte-xl: 3rem;
+
+    /* Espaçamentos */
+    --espaco-xs: 0.5rem;
+    --espaco-sm: 1rem;
+    --espaco-md: 1.5rem;
+    --espaco-lg: 2rem;
+    --espaco-xl: 3rem;
+
+    /* Outros padrões */
+    --raio: 12px;
+    --sombra: 0 4px 14px rgba(0, 0, 0, 0.08);
+    --transicao: 0.25s ease;
+}
+
+
+/* =========================================================
+   2. CONFIGURAÇÕES GLOBAIS
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: var(--fonte-sm);
+    line-height: 1.6;
+    color: var(--cor-texto);
+    background-color: var(--cor-fundo);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+a {
+    color: inherit;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: var(--fonte-lg);
+}
+
+h2 {
+    font-size: var(--fonte-lg);
+    margin-bottom: var(--espaco-md);
+}
+
+h3 {
+    font-size: var(--fonte-md);
+    margin-bottom: var(--espaco-sm);
+}
+
+p {
+    margin-bottom: var(--espaco-sm);
+}
+
+
+/* =========================================================
+   3. CONTAINER E GRID DE 12 COLUNAS
+   ========================================================= */
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--espaco-md);
+}
+
+.col-4 {
+    grid-column: span 4;
+}
+
+.col-6 {
+    grid-column: span 6;
+}
+
+
+/* =========================================================
+   4. CABEÇALHO E NAVEGAÇÃO
+   ========================================================= */
+
+.cabecalho {
+    background-color: var(--cor-primaria);
+    color: var(--cor-superficie);
+    position: relative;
+    z-index: 100;
+}
+
+.cabecalho-conteudo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--espaco-md);
+    min-height: 90px;
+}
+
+.logo {
+    font-size: var(--fonte-md);
+}
+
+.logo a {
+    color: var(--cor-superficie);
+    text-decoration: none;
+}
+
+.navegacao-desktop {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-md);
+}
+
+.navegacao-desktop > a,
+.dropdown > a {
+    color: var(--cor-superficie);
+    text-decoration: none;
+    font-weight: bold;
+    padding: var(--espaco-xs);
+    transition:
+        background-color var(--transicao),
+        color var(--transicao);
+}
+
+.navegacao-desktop > a:hover,
+.dropdown > a:hover {
+    color: var(--cor-secundaria-clara);
+}
+
+
+/* =========================================================
+   5. DROPDOWN
+   ========================================================= */
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 230px;
+    background-color: var(--cor-superficie);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: var(--espaco-xs);
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: var(--espaco-sm);
+    color: var(--cor-texto);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color var(--transicao);
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu a:focus-visible {
+    background-color: var(--cor-fundo);
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu {
+    display: block;
+}
+
+
+/* =========================================================
+   6. MENU MOBILE
+   ========================================================= */
+
+.menu-mobile {
+    display: none;
+    position: relative;
+}
+
+.menu-mobile summary {
+    cursor: pointer;
+    list-style: none;
+    font-weight: bold;
+}
+
+.menu-mobile summary::-webkit-details-marker {
+    display: none;
+}
+
+.icone-menu {
+    font-size: var(--fonte-md);
+    margin-right: var(--espaco-xs);
+}
+
+.menu-mobile nav {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    min-width: 210px;
+    background-color: var(--cor-superficie);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: var(--espaco-sm);
+}
+
+.menu-mobile nav a {
+    display: block;
+    color: var(--cor-texto);
+    text-decoration: none;
+    padding: var(--espaco-sm);
+    border-radius: 8px;
+}
+
+.menu-mobile nav a:hover,
+.menu-mobile nav a:focus-visible {
+    background-color: var(--cor-fundo);
+}
+
+
+/* =========================================================
+   7. SEÇÕES
+   ========================================================= */
+
+.secao {
+    padding: var(--espaco-xl) 0;
+}
+
+.secao-destaque {
+    background-color: #ECE9E1;
+}
+
+.hero {
+    padding: var(--espaco-xl) 0;
+    background-color: var(--cor-superficie);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--espaco-xl);
+    align-items: center;
+}
+
+.hero-conteudo {
+    grid-column: span 6;
+}
+
+.hero-imagem {
+    grid-column: span 6;
+}
+
+.hero-conteudo h2 {
+    font-size: var(--fonte-xl);
+    color: var(--cor-primaria-escura);
+}
+
+.hero-imagem img {
+    width: 100%;
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+}
+
+
+/* =========================================================
+   8. CARDS
+   ========================================================= */
+
+.card {
+    background-color: var(--cor-superficie);
+    padding: var(--espaco-lg);
+    border-radius: var(--raio);
+    border: 1px solid var(--cor-borda);
+    box-shadow: var(--sombra);
+    transition:
+        transform var(--transicao),
+        box-shadow var(--transicao);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.projeto-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.projeto-card p {
+    flex-grow: 1;
+}
+
+
+/* =========================================================
+   9. BOTÕES
+   ========================================================= */
+
+.botao {
+    display: inline-block;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--cor-primaria);
+    color: var(--cor-superficie);
+    font: inherit;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+
+    transition:
+        background-color var(--transicao),
+        box-shadow var(--transicao),
+        transform var(--transicao),
+        opacity var(--transicao);
+}
+
+.botao:hover {
+    background-color: var(--cor-primaria-escura);
+    box-shadow: var(--sombra);
+}
+
+.botao:focus-visible {
+    outline: 3px solid var(--cor-secundaria);
+    outline-offset: 3px;
+}
+
+.botao:active {
+    transform: scale(0.98);
+}
+
+.botao:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.botao-secundario {
+    background-color: var(--cor-secundaria);
+}
+
+.botao-secundario:hover {
+    background-color: #743515;
+}
+
+.botao-neutro {
+    background-color: var(--cor-texto-secundario);
+}
+
+.botao-neutro:hover {
+    background-color: var(--cor-texto);
+}
+
+
+/* =========================================================
+   10. BADGES
+   ========================================================= */
+
+.badge {
+    display: inline-block;
+    padding: 0.3rem 0.7rem;
+    margin-bottom: var(--espaco-sm);
+    border-radius: 999px;
+    font-size: var(--fonte-xs);
+    font-weight: bold;
+}
+
+.badge-verde {
+    background-color: #DDEDE4;
+    color: var(--cor-primaria-escura);
+}
+
+.badge-terra {
+    background-color: #F5DFD2;
+    color: #713718;
+}
+
+.badge-neutro {
+    background-color: #E8E8E8;
+    color: var(--cor-texto);
+}
+
+
+/* =========================================================
+   11. ALERTAS
+   ========================================================= */
+
+.alerta {
+    padding: var(--espaco-md);
+    margin-top: var(--espaco-md);
+    border-radius: var(--raio);
+    border-left: 5px solid;
+}
+
+.alerta-info {
+    background-color: #E8F2F7;
+    color: #173E53;
+    border-color: var(--cor-info);
+}
+
+
+/* =========================================================
+   12. TOAST
+   ========================================================= */
+
+.toast {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--espaco-sm);
+
+    position: fixed;
+    right: var(--espaco-lg);
+    bottom: var(--espaco-lg);
+
+    max-width: 360px;
+    padding: var(--espaco-md);
+
+    background-color: var(--cor-primaria-escura);
+    color: var(--cor-superficie);
+
+    border-radius: var(--raio);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+
+    z-index: 200;
+}
+
+.toast p {
+    margin: 0;
+    font-size: var(--fonte-xs);
+}
+
+.toast-icone {
+    font-size: var(--fonte-md);
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   13. CTA
+   ========================================================= */
+
+.cta {
+    background-color: var(--cor-primaria-escura);
+    color: var(--cor-superficie);
+    padding: var(--espaco-xl) 0;
+}
+
+.cta-conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.cta-conteudo p {
+    max-width: 700px;
+}
+
+
+/* =========================================================
+   14. CONTATO
+   ========================================================= */
+
+.contato {
+    font-style: normal;
+}
+
+
+/* =========================================================
+   15. FORMULÁRIO
+   ========================================================= */
+
+.formulario-container {
+    max-width: 900px;
+}
+
+.formulario-introducao {
+    margin-bottom: var(--espaco-lg);
+}
+
+.formulario {
+    background-color: var(--cor-superficie);
+    padding: var(--espaco-lg);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+}
+
+fieldset {
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    padding: var(--espaco-md);
+    margin-bottom: var(--espaco-lg);
+}
+
+legend {
+    padding: 0 var(--espaco-xs);
+    color: var(--cor-primaria-escura);
+    font-size: var(--fonte-md);
+    font-weight: bold;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--espaco-md);
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-xs);
+}
+
+.campo-completo {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-weight: bold;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--cor-borda);
+    border-radius: 8px;
+    background-color: var(--cor-superficie);
+    color: var(--cor-texto);
+    font: inherit;
+
+    transition:
+        border-color var(--transicao),
+        box-shadow var(--transicao),
+        background-color var(--transicao);
+}
+
+textarea {
+    resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--cor-primaria);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(47, 107, 79, 0.15);
+}
+
+
+/* =========================================================
+   16. VALIDAÇÃO VISUAL
+   ========================================================= */
+
+input:not([type="checkbox"]):valid:not(:placeholder-shown),
+textarea:valid:not(:placeholder-shown) {
+    border-color: var(--cor-sucesso);
+}
+
+input:not([type="checkbox"]):invalid:not(:placeholder-shown),
+textarea:invalid:not(:placeholder-shown) {
+    border-color: var(--cor-erro);
+    background-color: #FFF8F7;
+}
+
+select:valid {
+    border-color: var(--cor-sucesso);
+}
+
+.termos {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--espaco-sm);
+    margin-bottom: var(--espaco-lg);
+}
+
+.termos input {
+    width: auto;
+    margin-top: 0.35rem;
+}
+
+.acoes-formulario {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-sm);
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   17. RODAPÉ
+   ========================================================= */
+
+.rodape {
+    padding: var(--espaco-lg) 0;
+    background-color: var(--cor-texto);
+    color: var(--cor-superficie);
+    text-align: center;
+    font-size: var(--fonte-xs);
+}
+
+.rodape p {
+    margin-bottom: var(--espaco-xs);
+}
+
+
+/* =========================================================
+   18. ACESSIBILIDADE - FOCO DOS LINKS
+   ========================================================= */
+
+a:focus-visible,
+summary:focus-visible {
+    outline: 3px solid var(--cor-secundaria);
+    outline-offset: 4px;
+}
+
+
+/* =========================================================
+   19. BREAKPOINT 1
+   CELULARES PEQUENOS - até 479px
+   ========================================================= */
+
+@media (max-width: 479px) {
+
+    .container {
+        width: 92%;
+    }
+
+    .navegacao-desktop {
+        display: none;
+    }
+
+    .menu-mobile {
+        display: block;
+    }
+
+    .cabecalho-conteudo {
+        min-height: 75px;
+    }
+
+    .logo {
+        font-size: var(--fonte-sm);
+        max-width: 210px;
+    }
+
+    .texto-menu {
+        display: none;
+    }
+
+    .hero {
+        padding: var(--espaco-lg) 0;
+    }
+
+    .hero-conteudo,
+    .hero-imagem {
+        grid-column: 1 / -1;
+    }
+
+    .hero-conteudo h2 {
+        font-size: var(--fonte-lg);
+    }
+
+    /* Celular pequeno: cards 12/12 (uma coluna). */
+    /* Cards institucionais e de projetos: 12/12, uma coluna. */
+    .col-4,
+    .col-6 {
+        grid-column: 1 / -1;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-completo {
+        grid-column: auto;
+    }
+
+    .formulario {
+        padding: var(--espaco-sm);
+    }
+
+    .toast {
+        position: static;
+        max-width: none;
+        margin: var(--espaco-md);
+    }
+
+    .acoes-formulario {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .acoes-formulario .botao {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   20. BREAKPOINT 2
+   CELULARES MAIORES - 480px a 767px
+   ========================================================= */
+
+@media (min-width: 480px) and (max-width: 767px) {
+
+    .navegacao-desktop {
+        display: none;
+    }
+
+    .menu-mobile {
+        display: block;
+    }
+
+    .hero-conteudo,
+    .hero-imagem {
+        grid-column: 1 / -1;
+    }
+
+    .hero-conteudo h2 {
+        font-size: 2.4rem;
+    }
+
+    /* Cards institucionais e de projetos: 12/12, uma coluna. */
+    .col-4,
+    .col-6 {
+        grid-column: 1 / -1;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-completo {
+        grid-column: auto;
+    }
+
+    .toast {
+        right: var(--espaco-sm);
+        bottom: var(--espaco-sm);
+        max-width: 320px;
+    }
+}
+
+
+/* =========================================================
+   21. BREAKPOINT 3
+   TABLETS - 768px a 1023px
+   ========================================================= */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+
+    .container {
+        width: 92%;
+    }
+
+    .navegacao-desktop {
+        gap: var(--espaco-sm);
+    }
+
+    .hero-conteudo {
+        grid-column: span 7;
+    }
+
+    .hero-imagem {
+        grid-column: span 5;
+    }
+
+    /* Tablet: dois cards 6/12; último card 12/12. */
+    .cards-institucionais .col-4,
+    .projetos-grid .col-4 {
+        grid-column: span 6;
+    }
+
+    .cards-institucionais .col-4:last-child,
+    .projetos-grid .col-4:last-child {
+        grid-column: span 12;
+    }
+}
+
+
+/* =========================================================
+   22. BREAKPOINT 4
+   DESKTOPS - 1024px a 1439px
+   ========================================================= */
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+
+    .container {
+        max-width: 1100px;
+    }
+
+    .hero-conteudo,
+    .hero-imagem {
+        grid-column: span 6;
+    }
+
+    /* Desktop: três cards 4/12. */
+    .projetos-grid .col-4,
+    .cards-institucionais .col-4 {
+        grid-column: span 4;
+    }
+}
+
+
+/* =========================================================
+   23. BREAKPOINT 5
+   TELAS GRANDES - 1440px ou mais
+   ========================================================= */
+
+@media (min-width: 1440px) {
+
+    .container {
+        max-width: 1280px;
+    }
+
+    .hero {
+        padding: 4rem 0;
+    }
+
+    .hero-conteudo h2 {
+        font-size: 3.25rem;
+    }
+
+    .secao {
+        padding: 4rem 0;
+    }
+
+    /* Telas grandes: manter três cards 4/12, ampliando o espaçamento. */
+    .grid {
+        gap: var(--espaco-lg);
+    }
+}
+
+/* =========================================================
+   24. MELHORIAS DE ACESSIBILIDADE — EXPERIÊNCIA III
+   ========================================================= */
+
+/* O foco permanece visível nos controles e links da SPA. */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--cor-secundaria);
+    outline-offset: 3px;
+}
+
+/* Mensagens de validação: cor + texto, nunca apenas cor. */
+.mensagem-erro {
+    color: #922018;
+    font-weight: bold;
+}
+
+/* Respeita a preferência de pessoas sensíveis a animações. */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
